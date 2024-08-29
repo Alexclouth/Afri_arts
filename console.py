@@ -18,6 +18,14 @@ class AfriArts(cmd.Cmd):
         "Review": Review,
         "Order": Order
     }
+
+    def emptyline(self):
+        """Override the default behavior to do nothing on an empty line."""
+        pass
+
+    def do_quit(self, arg):
+        """Exit the command interpreter."""
+        return True
     
     def do_create(self, class_name):
         """Create a new instance of BaseModel, save it, and print the id."""
@@ -32,23 +40,7 @@ class AfriArts(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on the class name and id."""
-        # Check if the command is in the format <class name>.show(<id>)
-        if '.' in arg and 'show' in arg:
-            try:
-                class_name, method_call = arg.split('.', 1)
-                method, id_call = method_call.split('(', 1)
-                instance_id = id_call.rstrip(')')
-                instance_id = instance_id.strip('"')  # Remove quotes if present
-                print(instance_id)
-                if method.strip() != "show":
-                    raise ValueError
-                args = [class_name, instance_id]
-            except ValueError:
-                print("** invalid command format **")
-                return
-        else:
-            args = arg.split()
-    
+        args = arg.split()
         if not args:
             print("** class name missing **")
             return
@@ -65,7 +57,7 @@ class AfriArts(cmd.Cmd):
             return
     
         print(storage.all()[key])
-    
+        
 
     def do_destroy(self, args):
         """Delete an instance based on class name and id."""
@@ -128,14 +120,24 @@ class AfriArts(cmd.Cmd):
 
                 setattr(obj, attr_name, attr_value)
                 obj.save()
+    def default(self, line):
+        """Handle custom command syntax like <class name>.show(<id>)"""
+        if '.' in line and '(' in line and ')' in line:
+            try:
+                class_name, method_call = line.split('.', 1)
+                method, args = method_call.split('(', 1)
+                args = args.rstrip(')').strip('"')
+                
+                if method == "show":
+                    self.do_show(f"{class_name} {args}")
+                else:
+                    print(f"*** Unknown syntax: {line}")
+            except Exception as e:
+                print(f"*** Unknown syntax: {line}")
+        else:
+            print(f"*** Unknown syntax: {line}")
 
-    def emptyline(self):
-        """Override the default behavior to do nothing on an empty line."""
-        pass
-
-    def do_quit(self, arg):
-        """Exit the command interpreter."""
-        return True
+    
 
 if __name__ == '__main__':
     AfriArts().cmdloop()
