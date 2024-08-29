@@ -27,16 +27,8 @@ class AfriArts(cmd.Cmd):
         """Exit the command interpreter."""
         return True
     
-    def do_create(self, class_name):
-        """Create a new instance of BaseModel, save it, and print the id."""
-        if not class_name:
-            print("** class name missing **")
-        elif class_name not in self.classes:
-            print("** class doesn't exist **")
-        else:
-            new_instance = self.classes[class_name]()
-            new_instance.save()
-            print(new_instance.id)
+    
+
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on the class name and id."""
@@ -109,6 +101,10 @@ class AfriArts(cmd.Cmd):
             else:
                 attr_name = args[2]
                 attr_value = args[3].strip('"')
+                try:
+                    attr_value = eval(attr_value)
+                except Exception as e:
+                    pass
 
                 # Cast attribute to correct type
                 if hasattr(obj, attr_name):
@@ -141,10 +137,28 @@ class AfriArts(cmd.Cmd):
                 
                 if method == "show":
                     self.do_show(f"{class_name} {args}")
+                elif method == "all":
+                    self.do_all(f"{class_name}")
                 elif method == "count":
                     self.do_count(class_name)
                 elif method == "destroy":
                     self.do_destroy(f"{class_name} {args}")
+                elif method == "update":
+                    args = args.split(', ', 1)
+                    try:
+                        args[1] = eval(args[1])
+                    except Exception as e:
+                        pass
+                    if isinstance(args[1], dict):
+                        instance_id = args[0].strip().strip('"')
+                        for key, value in args[1].items():
+                            self.do_update(f"{class_name} {instance_id} {key} {value}")
+                    else:
+                        instance_id = args[0].strip().strip('"')
+                        args1 = args[1].split(',', 1)
+                        attribute_name = args1[0].strip().strip('"')
+                        attribute_value = args1[1].strip().strip('"')
+                        self.do_update(f"{class_name} {instance_id} {attribute_name} {attribute_value}")
                 else:
                     print(f"*** Unknown syntax: {line}")
             except Exception as e:
