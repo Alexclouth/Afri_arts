@@ -30,6 +30,41 @@ class AfriArts(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
+    def do_show(self, arg):
+        """Prints the string representation of an instance based on the class name and id."""
+        # Check if the command is in the format <class name>.show(<id>)
+        if '.' in arg and 'show' in arg:
+            try:
+                class_name, method_call = arg.split('.', 1)
+                method, id_call = method_call.split('(', 1)
+                instance_id = id_call.rstrip(')')
+                instance_id = instance_id.strip('"')  # Remove quotes if present
+                print(instance_id)
+                if method.strip() != "show":
+                    raise ValueError
+                args = [class_name, instance_id]
+            except ValueError:
+                print("** invalid command format **")
+                return
+        else:
+            args = arg.split()
+    
+        if not args:
+            print("** class name missing **")
+            return
+        if args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+    
+        key = f"{args[0]}.{args[1]}"
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+    
+        print(storage.all()[key])
     
 
     def do_destroy(self, args):
