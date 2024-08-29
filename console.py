@@ -27,8 +27,46 @@ class AfriArts(cmd.Cmd):
         """Exit the command interpreter."""
         return True
     
+    def do_create(self, arg):
+        """Creates a new instance of a class with given parameters."""
+        if not arg:
+            print("** class name missing **")
+            return
     
-
+        args = arg.split()
+        class_name = args[0]
+    
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+    
+        new_instance = self.classes[class_name]()
+    
+        for param in args[1:]:
+            try:
+                key, value = param.split("=", 1)
+    
+                # Handle strings
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+    
+                # Handle integers
+                elif value.isdigit():
+                    value = int(value)
+    
+                # Handle floats
+                elif '.' in value:
+                    value = float(value)
+    
+                # Set the attribute on the instance
+                setattr(new_instance, key, value)
+    
+            except (ValueError, TypeError):
+                # Skip the parameter if it doesn't fit the format
+                continue
+    
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on the class name and id."""
