@@ -76,6 +76,7 @@ class AfriArts(cmd.Cmd):
                 del storage.all()[key]
                 storage.save()
 
+
     def do_all(self, class_name):
         """Print all string representations of all instances."""
         if class_name and class_name not in self.classes:
@@ -130,6 +131,8 @@ class AfriArts(cmd.Cmd):
                 
                 if method == "show":
                     self.do_show(f"{class_name} {args}")
+                elif method == "destroy":
+                    self.do_destroy(f"{class_name} {args}")
                 else:
                     print(f"*** Unknown syntax: {line}")
             except Exception as e:
