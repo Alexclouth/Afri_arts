@@ -121,6 +121,16 @@ class AfriArts(cmd.Cmd):
 
                 setattr(obj, attr_name, attr_value)
                 obj.save()
+
+    def do_count(self, class_name):
+        """Counts the number of instances of a given class."""
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        count = sum(1 for obj in storage.all().values() if obj.__class__.__name__ == class_name)
+        print(count)
+        
     def default(self, line):
         """Handle custom command syntax like <class name>.show(<id>)"""
         if '.' in line and '(' in line and ')' in line:
@@ -131,6 +141,8 @@ class AfriArts(cmd.Cmd):
                 
                 if method == "show":
                     self.do_show(f"{class_name} {args}")
+                elif method == "count":
+                    self.do_count(class_name)
                 elif method == "destroy":
                     self.do_destroy(f"{class_name} {args}")
                 else:
