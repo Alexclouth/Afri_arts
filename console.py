@@ -27,53 +27,33 @@ class AfriArts(cmd.Cmd):
         """Exit the command interpreter."""
         return True
     
-    def do_create(self, arg):
-        """Creates a new instance of a class with given parameters."""
-        args = arg.split()
+    def do_create(self, args):
+        """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
-        if args[0] not in self.classes:
+        arg_list = args.split()
+        class_name = arg_list[0]
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
-    
-        # Extract class name and remove it from the argument list
-        class_name = args[0]
-        params = args[1:]
-    
-        # Create a dictionary to hold the attributes
-        attributes = {}
-    
-        for param in params:
-            if '=' not in param:
-                continue
-    
-            key, value = param.split('=', 1)
-    
-            # Handle string values
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1]  # Remove the surrounding double quotes
-                value = value.replace('\\"', '"')  # Unescape any double quotes
-                value = value.replace('_', ' ')  # Replace underscores with spaces
-    
-            # Handle float values
-            elif '.' in value:
-                try:
-                    value = float(value)
-                except ValueError:
-                    continue
-    
-            # Handle integer values
+
+        new_instance = self.classes[class_name]()
+
+        for arg in arg_list[1:]:
+            param = arg.split('=')
+            key = param[0]
+            val = param[1]
+
+            if val[0] == '\"':
+                val = val.replace('\"', '').replace('_', ' ')
+            elif '.' in val:
+                val = float(val)
             else:
-                try:
-                    value = int(value)
-                except ValueError:
-                    continue
-    
-            attributes[key] = value
-    
-        # Create the new instance
-        new_instance = self.classes[class_name](**attributes)
+                val = int(val)
+
+            setattr(new_instance, key, val)
+
         new_instance.save()
         print(new_instance.id)
 
