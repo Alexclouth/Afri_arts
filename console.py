@@ -29,42 +29,51 @@ class AfriArts(cmd.Cmd):
     
     def do_create(self, arg):
         """Creates a new instance of a class with given parameters."""
-        if not arg:
+        args = arg.split()
+        if not args:
             print("** class name missing **")
             return
-    
-        args = arg.split()
-        class_name = args[0]
-    
-        if class_name not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
     
-        new_instance = self.classes[class_name]()
+        # Extract class name and remove it from the argument list
+        class_name = args[0]
+        params = args[1:]
     
-        for param in args[1:]:
-            try:
-                key, value = param.split("=", 1)
+        # Create a dictionary to hold the attributes
+        attributes = {}
     
-                # Handle strings
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1].replace('_', ' ').replace('\\"', '"')
-    
-                # Handle integers
-                elif value.isdigit():
-                    value = int(value)
-    
-                # Handle floats
-                elif '.' in value:
-                    value = float(value)
-    
-                # Set the attribute on the instance
-                setattr(new_instance, key, value)
-    
-            except (ValueError, TypeError):
-                # Skip the parameter if it doesn't fit the format
+        for param in params:
+            if '=' not in param:
                 continue
     
+            key, value = param.split('=', 1)
+    
+            # Handle string values
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]  # Remove the surrounding double quotes
+                value = value.replace('\\"', '"')  # Unescape any double quotes
+                value = value.replace('_', ' ')  # Replace underscores with spaces
+    
+            # Handle float values
+            elif '.' in value:
+                try:
+                    value = float(value)
+                except ValueError:
+                    continue
+    
+            # Handle integer values
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
+                    continue
+    
+            attributes[key] = value
+    
+        # Create the new instance
+        new_instance = self.classes[class_name](**attributes)
         new_instance.save()
         print(new_instance.id)
 
