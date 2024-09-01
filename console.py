@@ -2,6 +2,7 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.artist import Artist
 from models.artwork import ArtWork
 from models.review import Review
 from models.order import Order
