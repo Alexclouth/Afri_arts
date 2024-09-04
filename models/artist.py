@@ -11,18 +11,21 @@ class Artist(User):
 
     __tablename__ = 'artist'
 
-    bio = Column(String(1024), nullable=True)
+    first_name = Column(String(128), nullable=True)
+    last_name = Column(String(128), nullable=True)
     city = Column(String(128), nullable=True)
     country = Column(String(128), nullable=True)
+    bio = Column(String(1024), nullable=True)
     artwork = relationship("Artwork", backref="artist", cascade="delete")
+
 
     @property
     def artist_id(self):
-        return self.user_id  # Referring to the same ID as artist_id
+        return self.id  # Referring to the same ID as artist_id
     
     if getenv('AFRI_TYPE_STORAGE') != 'db':
         @property
-        def artwork(self):
+        def artworks(self):
             """get a list of all related artwork instances
             with artist_id = to the current artist id
             """

@@ -17,5 +17,4 @@ class Artwork(BaseModel, Base):
     style = Column(String(128), nullable=False)
     available = Column(Boolean, default=True, nullable=False)
     artist_id = Column(String(60), ForeignKey('artist.id'), nullable=False)
-    orders = relationship('Order', backref='user', cascade='delete')
-    reviews = relationship('Review', backref='artwork', cascade='delete')
+    reviews = relationship('Review', backref='artwork', lazy='True')
