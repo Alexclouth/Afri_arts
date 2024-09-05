@@ -3,9 +3,8 @@ import cmd
 from models.base_model import BaseModel
 from models.user import User
 from models.artist import Artist
-from models.artwork import ArtWork
+from models.artwork import Artwork
 from models.review import Review
-from models.order import Order
 from models import storage
 
 class AfriArts(cmd.Cmd):
@@ -15,9 +14,9 @@ class AfriArts(cmd.Cmd):
     classes = {
         "BaseModel": BaseModel,
         "User": User,
-        "ArtWork": ArtWork,
+        "Artwork": Artwork,
         "Review": Review,
-        "Order": Order
+        "Artist": Artist
     }
 
     def emptyline(self):

@@ -1,39 +1,40 @@
 from flask import render_template, url_for, flash, redirect, request
-from models import storage
-from models.user import User
-from web_flask import app, bcrypt
+from web_flask import app, bcrypt, db
 from web_flask.forms import Signup, Signin
 from flask_login import login_user, current_user, logout_user, login_required
+from web_flask.models import User
 
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
 
 @app.route("/about")
 def about():
-    return render_template('about.html', title='About')
+    return render_template('index.html', title='About')
 
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = Signup()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        storage.new(user)  # Add the new user to storage
-        storage.save()  # Save the new user to the database or file
-        flash('Your account has been created! You are now able to signin', 'success')
+        db.session.add(user)
+        db.session.commit()
+        flash('Your account has been created! You are now able to Login', 'success')
         return redirect(url_for('signin'))
     return render_template('signup.html', title='Register', form=form)
 
 
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
+    
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = Signin()

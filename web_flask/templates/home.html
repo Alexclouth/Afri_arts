@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+  <div class="welcome1">
+    <section class="welcome">
+        <h1>Welcome to Afri-Arts</h1>
+        <p>Discover and purchase artwork from emerging artists worldwide.</p>
+        <a href="artworks.html" class="btn">Explore Artworks</a>
+    </section>
+    </div>
+
+    <section class="featured-artworks">
+        <h2>Featured Artworks</h2>
+        <div class="grid">
+            <div class="grid-item"><img src="image/image1.jpg" alt="Image 1" width="50px" height="5px">
+                <div class="overlay">
+                    <div class="image-info">
+                        <div class="profile-pic">
+                            <img src="image/image11.jpg" alt="Painter">
+                        </div>
+                        <div class="details">
+                            <span>Painting Name</span>
+                            <p>painter name</p>
+                        </div>
+                    </div>
+                    <div class="like-comment-container">
+                        <div class="icon-container">
+                            <div class="like-container">
+                                <input type="checkbox" id="like1" class="like-checkbox">
+                                <label for="like1" class="like-label">&#x2764;</label>
+                            </div>
+                            <p>120</p> <!-- Number of likes -->
+                        </div>
+                        <div class="icon-container">
+                            <i class="fas fa-comment"></i>
+                            <p>45</p> <!-- Number of comments -->
+                        </div>
+                    </div>
+                    <div class="price">$10</div>
+                </div>
+            </div>
+
+            <div class="grid-item"><img src="image/image2.png" alt="Image 2" width="50px" height="5px">
+                <div class="overlay">
+                    <div class="image-info">
+                        <div class="profile-pic">
+                            <img src="image/image11.jpg" alt="Painter">
+                        </div>
+                        <div class="details">
+                            <span>Painting Name</span>
+                            <p>painter name</p>
+                        </div>
+                    </div>
+                    <div class="like-comment-container">
+                        <div class="icon-container">
+                            <div class="like-container">
+                                <input type="checkbox" id="like2" class="like-checkbox">
+                                <label for="like2" class="like-label">&#x2764;</label>
+                            </div>
+                            <p>120</p> <!-- Number of likes -->
+                        </div>
+                        <div class="icon-container">
+                            <i class="fas fa-comment"></i>
+                            <p>45</p> <!-- Number of comments -->
+                        </div>
+                    </div>
+                    <div class="price">$10</div>
+                </div>
+            </div>
+            <div class="grid-item"><img src="image/image3.webp" alt="Image 3" width="50px" height="5px">
+                <div class="overlay">
+                    <div class="image-info">
+                        <div class="profile-pic">
+                            <img src="image/image11.jpg" alt="Painter">
+                        </div>
+                        <div class="details">
+                            <span>Painting Name</span>
+                            <p>painter name</p>
+                        </div>
+                    </div>
+                    <div class="like-comment-container">
+                        <div class="icon-container">
+                            <div class="like-container">
+                                <input type="checkbox" id="like3" class="like-checkbox">
+                                <label for="like3" class="like-label">&#x2764;</label>
+                            </div>
+                            <p>120</p> <!-- Number of likes -->
+                        </div>
+                        <div class="icon-container">
+                            <i class="fas fa-comment"></i>
+                            <p>45</p> <!-- Number of comments -->
+                        </div>
+                    </div>
+                    <div class="price">$10</div>
+                </div>
+            </div>
+            <div class="grid-item"><img src="image/image4.webp" alt="Image 4" width="50px" height="5px">
+                <div class="overlay">
+                    <div class="image-info">
+                        <div class="profile-pic">
+                            <img src="image/image11.jpg" alt="Painter">
+                        </div>
+                        <div class="details">
+                            <span>Painting Name</span>
+                            <p>painter name</p>
+                        </div>
+                    </div>
+                    <div class="like-comment-container">
+                        <div class="icon-container">
+                            <div class="like-container">
+                                <input type="checkbox" id="like4" class="like-checkbox">
+                                <label for="like4" class="like-label">&#x2764;</label>
+                            </div>
+                            <p>120</p> <!-- Number of likes -->
+                        </div>
+                        <div class="icon-container">
+                            <i class="fas fa-comment"></i>
+                            <p>45</p> <!-- Number of comments -->
+                        </div>
+                    </div>
+                    <div class="price">$10</div>
+                </div>
+            </div>
+            <div class="grid-item"><img src="image/image5.jpg" alt="Image 5" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image6.webp" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image7.webp" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image8.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image9.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/images9.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/images10.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image11.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image12.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image13.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image1.jpg" alt="Image 1" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image2.png" alt="Image 2" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image3.webp" alt="Image 3" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image4.webp" alt="Image 4" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image5.jpg" alt="Image 5" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image6.webp" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image7.webp" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image8.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image9.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/images9.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/images10.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image11.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image12.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <div class="grid-item"><img src="image/image13.jpg" alt="Image 6" width="50px" height="5px"></div>
+            <!-- Add more images as needed -->
+        </div>
+    </section>
+    <div class="about-us">
+       <section>
+        <table>
+            <caption>About-us</caption>
+            <tr>
+                <th>Welcome to Afri-Arts Gallery Showcase</th>
+                <th>Empower African Creators</th>
+                <th>A Community You Can Trust</th>
+            </tr>
+            <tr>
+                <td>Discover the vibrant world of African art with Afri-Arts Gallery Showcase, an online platform where
+                    artists and art enthusiasts connect to celebrate and share unique, culturally rich creations. Our community
+                    is dedicated to uplifting emerging talents and preserving the heritage of African artistry.
+                </td>
+                <td>
+                    Afri-Arts is more than just a gallery—it's a movement. We offer a space where independent artists can
+                    showcase their work, free from intermediaries. Every piece tells a story, and we make it easy for you to
+                    connect directly with the creators behind the art.
+                </td>
+                <td>
+                    Your experience is our priority. From secure transactions to personalized support, we ensure that every
+                    interaction on our platform is seamless and safe. Whether you're an artist or an admirer, we're here to help.
+                </td>
+            </tr>
+        </table>
+        <h1>Have a question? Well, we’ve got some answers.</h1>
+        <button>Contact-us</button>
+      <section>
+    </div>
+{% endblock%}

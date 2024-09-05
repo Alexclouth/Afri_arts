@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="500">
     <title>Afri Arts</title>
-    <link rel="icon" href="image/icon.jpg" type="image/jpg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='image/icon.jpg') }}" alt="Afri">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home2.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='artists.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='artworks.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layout.css') }}">
+    {% block extra_css %}{% endblock %}
 
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo">
+            <a href="home.html" class="logo">
                 <div class="img-container">
-                    <img src="image/icon.jpg" alt="Afri Arts" width="55px" height="55px"> <p>Afri Arts</p>
+                    <img src="{{ url_for('static', filename='image/icon.jpg') }}" alt="Afri Arts" width="55px" height="55px"> <p>Afri Arts</p>
                 </div>
             </a>
             <div class="search">
@@ -29,29 +25,16 @@
                 <span class="search-icon"></span>
             </div>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="home">Home</a></li>
                 <li><a href="artists.html">Artists</a></li>
                 <li><a href="artworks.html">Artworks</a></li>
-                <li><a href="signin.html">Login</a></li>
-                <li><a href="signup.html">Register</a></li>
+                <li><a href="signin">Login</a></li>
+                <li><a href="signup">Register</a></li>
             </ul>
         </nav>
     </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %}
-        </div>
-      </div>
+    <main>
+	    {% block content %}{% endblock %}
     </main>
-   </body>
+ </body>
 </html>
