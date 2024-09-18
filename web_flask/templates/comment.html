@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home2.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>{{ artwork.title }}</h1>
+    <img src="{{ url_for('static', filename='artworks/' + artwork.image) }}" alt="Artwork">
+
+    <!-- Comment form -->
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.content.label }}
+            {{ form.content(class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+
+    <!-- Display comments -->
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+        <div class="comment">
+            <p>{{ comment.content }}</p>
+            <small>By {{ comment.commented_by.username }} on {{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
+        </div>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endfor %}
+{% endblock %}

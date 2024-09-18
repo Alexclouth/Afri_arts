@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='artist_posts.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="artist-profile">
+        <div class="background"><img class="article-img" src="{{ url_for('static', filename='image/' + user.image_file) }}">
+        </div>
+        <div class="artist-overlay">
+            <div class="profile-container">
+                <img src="{{ url_for('static', filename='image/' + user.image_file) }}" alt="Profile Picture" class="profile-picture">
+                <div class="profile-name">
+                    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                    <h3>{{ user.city }}</h3>
+                    <h4>{{ user.country }}</h4>
+                    <h5>Username: {{ user.username }}</h5>
+                    <h5>Email: {{ user.email }}</h5>
+                    <h5 class="mt-5">Bio</h5>
+                    <h5 class="mt-2">{{ user.bio }}</h5>
+                    <p>{{ total_posts }} Posts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-container">
+        {% for post in posts %}
+                <div class="grid-item">
+                    <a href="{{ url_for('posts.single_post', art_id = post.id) }}">
+                        <img src="{{ url_for('static', filename='artworks/' + post.image) }}" alt="Artwork">
+                    </a>
+                    <h1>Title: {{ post.title }}</h1>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}

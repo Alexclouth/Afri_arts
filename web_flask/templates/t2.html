@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="60">
+    <title>Afri Arts</title>
+    <link rel="icon" href="{{ url_for('static', filename='image/icon.jpg') }}" alt="Afri">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='update_post.css') }}">
+</head>
+<body>
+    <div class="section">
+        <div class="image">
+            <!-- File Input with Custom Label -->
+            <label for="file-input" class="custom-file-upload border-bottom">
+                Choose a file
+            </label>
+            <br>
+            <!-- Integrating Flask-WTForms field for image with custom input -->
+            {{ form.image(class="form-control-file d-none", id="file-input", accept="image/*") }}
+            
+            <!-- Image Preview -->
+            <img id="image-preview" src="{{ url_for('static', filename='image/default2.jpg') }}" alt="Image Preview" style="max-width: 100%; margin-top: 10px;">
+            
+            <!-- Flask-WTForms Error Handling -->
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                    <span class="text-danger">{{ error }}</span><br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="content-section">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 New-post">Update Post</legend>
+                    <div class="form-group">
+                        {{ form.title.label(class="form-control-label mb-2") }}
+                        {% if form.title.errors %}
+                            {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control form-control-lg text-field", placeholder="Add a title") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.description.label(class="form-control-label mb-2") }}
+                        {% if form.description.errors %}
+                            {{ form.description(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.description(class="form-control form-control-lg text-field", placeholder="Add a description", rows="4") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.price.label(class="form-control-label mb-2") }}
+                        {% if form.price.errors %}
+                            {{ form.price(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.price.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.price(class="form-control form-control-lg text-field", autocomplete="off", placeholder="Add a price in dollar") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.art_type.label(class="form-control-label mb-2") }}
+                        {% if form.art_type.errors %}
+                            {{ form.art_type(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.art_type.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.art_type(class="form-control form-control-lg text-field", placeholder="Select for art type") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.style.label(class="form-control-label") }}
+                        {% if form.style.errors %}
+                            {{ form.style(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.style.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.style(class="form-control form-control-lg mt-2 text-field", placeholder="Select for art style") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-submit") }}
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+    // script.js
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imagePreview = document.getElementById('image-preview');
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a valid image file.');
+            }
+        });
+    </script>
+</body>

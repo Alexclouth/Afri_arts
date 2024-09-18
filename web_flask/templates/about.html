@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="about-us">
+        <section>
+        <table>
+            <caption>About-us</caption>
+            <tr>
+                <th>Welcome to Afri-Arts Gallery Showcase</th>
+                <th>Empower African Creators</th>
+                <th>A Community You Can Trust</th>
+            </tr>
+            <tr>
+                <td>Discover the vibrant world of African art with Afri-Arts Gallery Showcase, an online platform where
+                    artists and art enthusiasts connect to celebrate and share unique, culturally rich creations. Our community
+                    is dedicated to uplifting emerging talents and preserving the heritage of African artistry.
+                </td>
+                <td>
+                    Afri-Arts is more than just a gallery—it's a movement. We offer a space where independent artists can
+                    showcase their work, free from intermediaries. Every piece tells a story, and we make it easy for you to
+                    connect directly with the creators behind the art.
+                </td>
+                <td>
+                    Your experience is our priority. From secure transactions to personalized support, we ensure that every
+                    interaction on our platform is seamless and safe. Whether you're an artist or an admirer, we're here to help.
+                </td>
+            </tr>
+        </table>
+        <h1>Have a question? Well, we’ve got some answers.</h1>
+        <button><a href="mailto:alazeralphilo@gmail.com">Contact-us</a></button>
+    <section>
+    </div>
+{% endblock %}

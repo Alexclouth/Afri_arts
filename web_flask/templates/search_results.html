@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <meta name="csrf-token" content="{{ csrf_token() }}" id="csrf-token">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
+{% endblock %}
+
+{% block content %}
+    <section class="featured-artworks" id="artworks">
+        <h2 class="mb-3">Your search results...</h2>
+        <div class="grid">
+            {% for art in artwork %}
+                <div class="grid-item">
+                        <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image"> 
+                    <div class="overlay">
+                        <a href="{{ url_for('posts.single_post', art_id = art.id) }}" class="overlay-link">
+                            <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image">
+                        </a>
+                        <div class="image-info">
+                            <div class="profile-pic">
+                                <img src="{{ url_for('static', filename='image/' + art.uploader.image_file) }}" alt="Painter">
+                            </div>
+                            <div class="details">
+                                <span><a href="{{ url_for('posts.single_post', art_id = art.id) }}" class="overlay-link">{{ art.title }}</a></span>
+                                <p><a href="{{ url_for('users.artist_posts', username=art.uploader.username) }}">{{ art.uploader.username }}</a></p>
+                            </div>
+                        </div>
+                        <div class="like-comment-container">
+                            <div class="icon-container">
+                                <div class="like-container">
+                                    <input type="checkbox" id="like-{{ art.id }}" class="like-checkbox" onclick="toggleLike('{{ art.id }}')" {{ 'checked' if user_liked[art.id] else '' }}>
+                                    <label for="like-{{ art.id }}" class="like-label">
+                                        <i id="like-icon-{{ art.id }}" class="fas {{ 'fa-heart' if user_liked[art.id] else 'far fa-heart' }}"></i>
+                                    </label>
+                                    <p id="like-count-{{ art.id }}" class="pr-2 mb-2">{{ like_counts[art.id] }}</p> <!-- Number of likes -->
+                                </div>
+                            </div>
+                            <div class="icon-container">
+                                <a href="{{ url_for('posts.single_post', art_id = art.id) }}#comment">
+                                    <i class="fas fa-comment comment"></i>
+                                </a>
+                                <p>{{comment_counts[art.id]}}</p> <!-- Number of comments -->
+                            </div>
+                        </div>
+                        <div class="price">${{art.price}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <script>
+        function getCsrfToken() {
+            return document.getElementById('csrf-token').getAttribute('content');
+        }
+    
+        function toggleLike(artworkId) {
+            fetch('/like_toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()  // Read CSRF token from meta tag
+                },
+                body: JSON.stringify({
+                    artwork_id: artworkId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked) {
+                    document.getElementById(`like-icon-${artworkId}`).classList.remove('far');  // empty heart
+                    document.getElementById(`like-icon-${artworkId}`).classList.add('fas');   // filled heart
+                } else {
+                    document.getElementById(`like-icon-${artworkId}`).classList.remove('fas');
+                    document.getElementById(`like-icon-${artworkId}`).classList.add('far');
+                }
+                document.getElementById(`like-count-${artworkId}`).textContent = data.like_count;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+{% endblock %}
