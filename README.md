@@ -1,1 +1,2 @@
-will be edited
+# Afri art website
+## content
