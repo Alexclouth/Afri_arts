@@ -15,11 +15,7 @@
                 <div class="grid-item">
                         <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image"> 
                     <div class="overlay">
-<<<<<<< HEAD
                         <a href="{{ url_for('posts.single_post', art_id = art.id) }}" class="overlay-link">
-=======
-                        <a href="{{ url_for('single_post', art_id = art.id) }}" class="overlay-link">
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
                             <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image">
                         </a>
                         <div class="image-info">
@@ -27,13 +23,8 @@
                                 <img src="{{ url_for('static', filename='image/' + art.uploader.image_file) }}" alt="Painter">
                             </div>
                             <div class="details">
-<<<<<<< HEAD
                                 <span><a href="{{ url_for('posts.single_post', art_id = art.id) }}" class="overlay-link">{{ art.title }}</a></span>
                                 <p><a href="{{ url_for('users.artist_posts', username=art.uploader.username) }}">{{ art.uploader.username }}</a></p>
-=======
-                                <span><a href="{{ url_for('single_post', art_id = art.id) }}" class="overlay-link">{{ art.title }}</a></span>
-                                <p><a href="{{ url_for('artist_posts', username=art.uploader.username) }}">{{ art.uploader.username }}</a></p>
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
                             </div>
                         </div>
                         <div class="like-comment-container">
@@ -47,11 +38,7 @@
                                 </div>
                             </div>
                             <div class="icon-container">
-<<<<<<< HEAD
                                 <a href="{{ url_for('posts.single_post', art_id = art.id) }}#comment">
-=======
-                                <a href="{{ url_for('single_post', art_id = art.id) }}#comment">
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
                                     <i class="fas fa-comment comment"></i>
                                 </a>
                                 <p>{{comment_counts[art.id]}}</p> <!-- Number of comments -->

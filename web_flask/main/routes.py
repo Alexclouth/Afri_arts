@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 from flask import render_template, url_for, flash, redirect, request, jsonify, Blueprint
 from web_flask import db
 from flask_login import current_user
 from web_flask.models import Artwork, Comment
 from web_flask.main.utils import search_artworks_by_title
-=======
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from web_flask import db
 from flask_login import current_user
 from web_flask.models import Artwork, Comment
 from flask import Blueprint
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 
 main = Blueprint('main', __name__)
 
@@ -68,14 +65,11 @@ def about():
     return render_template('about.html')
 
 
-<<<<<<< HEAD
-=======
 def search_artworks_by_title(query):
     artworks = Artwork.query.all()
     return [artwork for artwork in artworks if query.lower() in artwork.title.lower()]
 
 
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 @main.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query', '')
