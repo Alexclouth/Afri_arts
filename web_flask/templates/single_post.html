@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='single_post.css') }}"> 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
+{% endblock %}
+{% block content %}
+    <div class="section">
+        <div class="image">
+            <img src="{{ url_for('static', filename='artworks/' + post.image) }}" alt="Image"> 
+        </div>
+        <div class="img-info">
+            <div class="info">
+                <small>{{post.date_posted.strftime('%Y-%m-%d')}}</small>
+                <h1 class="border-bottom mb-4"> Title : {{post.title}}</h1>
+                <div class="author">
+                    <div>
+                        <img class="author-img" src="{{ url_for('static', filename='image/' + post.uploader.image_file) }}">
+                    </div>
+                    <div class="author-info">
+                        <a href="{{ url_for('artist_posts', username=post.uploader.username) }}">{{ post.uploader.username }}</a>
+                        <h6>{{ post.uploader.email }}</h6>
+                    </div>
+                </div>
+                <div class="discription">
+                    <h3>Description: {{post.description}}</h3>
+                    <p>Art Type: {{post.art_type}}</p>
+                    <p>Art Style: {{post.style}}</p>
+                    <p>Price: {{post.price}}$</p>
+                </div>
+                {% if post.uploader == current_user %}
+                    <div class="button mb-5">
+                        <a href="{{ url_for('update_post', art_id=post.id) }}">Update</a>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>                
+                    </div>
+                {% endif %}
+                <h3 id="comment" class="mt-5 ml-5 mb-5">{{num_comments}} comments</h3>
+                {% for comment in comments %}
+                    <div class="display-comment">
+                        <img class="comment-img" src="{{ url_for('static', filename='image/' + comment.commented_by.image_file) }}">
+                        <div class="comment-content">
+                            <small class="comment-info">
+                                <span class="username">{{ comment.commented_by.username }}</span>
+                                <span class="date">{{ comment.date_posted.strftime('%Y-%m-%d') }}</span>
+                            </small>                           
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No comments yet.</p>
+                {% endfor %}
+            </div>
+            <div class="comment">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="container">
+                        <input type="text" name="content" id="content" value="{{ form.content.data if form.content.data is not none else '' }}" placeholder="Add a comment"/>
+                        <button type="submit" class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="deleteModalLabel">Delete post?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Are you sure you want to delete this artwork?</h6>
+                    <p>This action will permanently remove the artwork from our gallery and cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mr-5" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ url_for('delete_post', art_id=post.id) }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-danger" type="submit">Delete</button>                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

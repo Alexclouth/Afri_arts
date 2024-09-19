@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 
 {% block extra_css %}
+    <meta name="csrf-token" content="{{ csrf_token() }}" id="csrf-token">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
 {% endblock %}
 
 {% block content %}
@@ -11,176 +12,89 @@
     <section class="welcome">
         <h1>Welcome to Afri-Arts</h1>
         <p>Discover and purchase artwork from emerging artists worldwide.</p>
-        <a href="artworks.html" class="btn">Explore Artworks</a>
+        <a href="#artworks" class="btn">Explore Artworks</a>
     </section>
     </div>
 
-    <section class="featured-artworks">
-        <h2>Featured Artworks</h2>
+    <section class="featured-artworks" id="artworks">
+        <h2 class="mt-5">All Artworks</h2>
         <div class="grid">
-            <div class="grid-item"><img src="image/image1.jpg" alt="Image 1" width="50px" height="5px">
-                <div class="overlay">
-                    <div class="image-info">
-                        <div class="profile-pic">
-                            <img src="image/image11.jpg" alt="Painter">
-                        </div>
-                        <div class="details">
-                            <span>Painting Name</span>
-                            <p>painter name</p>
-                        </div>
-                    </div>
-                    <div class="like-comment-container">
-                        <div class="icon-container">
-                            <div class="like-container">
-                                <input type="checkbox" id="like1" class="like-checkbox">
-                                <label for="like1" class="like-label">&#x2764;</label>
+            {% for art in artwork %}
+                <div class="grid-item">
+                        <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image"> 
+                    <div class="overlay">
+                        <a href="{{ url_for('single_post', art_id = art.id) }}" class="overlay-link">
+                            <img src="{{ url_for('static', filename='artworks/' + art.image) }}" alt="Image">
+                        </a>
+                        <div class="image-info">
+                            <div class="profile-pic">
+                                <img src="{{ url_for('static', filename='image/' + art.uploader.image_file) }}" alt="Painter">
                             </div>
-                            <p>120</p> <!-- Number of likes -->
-                        </div>
-                        <div class="icon-container">
-                            <i class="fas fa-comment"></i>
-                            <p>45</p> <!-- Number of comments -->
-                        </div>
-                    </div>
-                    <div class="price">$10</div>
-                </div>
-            </div>
-
-            <div class="grid-item"><img src="image/image2.png" alt="Image 2" width="50px" height="5px">
-                <div class="overlay">
-                    <div class="image-info">
-                        <div class="profile-pic">
-                            <img src="image/image11.jpg" alt="Painter">
-                        </div>
-                        <div class="details">
-                            <span>Painting Name</span>
-                            <p>painter name</p>
-                        </div>
-                    </div>
-                    <div class="like-comment-container">
-                        <div class="icon-container">
-                            <div class="like-container">
-                                <input type="checkbox" id="like2" class="like-checkbox">
-                                <label for="like2" class="like-label">&#x2764;</label>
+                            <div class="details">
+                                <span><a href="{{ url_for('single_post', art_id = art.id) }}" class="overlay-link">{{ art.title }}</a></span>
+                                <p><a href="{{ url_for('artist_posts', username=art.uploader.username) }}">{{ art.uploader.username }}</a></p>
                             </div>
-                            <p>120</p> <!-- Number of likes -->
                         </div>
-                        <div class="icon-container">
-                            <i class="fas fa-comment"></i>
-                            <p>45</p> <!-- Number of comments -->
-                        </div>
-                    </div>
-                    <div class="price">$10</div>
-                </div>
-            </div>
-            <div class="grid-item"><img src="image/image3.webp" alt="Image 3" width="50px" height="5px">
-                <div class="overlay">
-                    <div class="image-info">
-                        <div class="profile-pic">
-                            <img src="image/image11.jpg" alt="Painter">
-                        </div>
-                        <div class="details">
-                            <span>Painting Name</span>
-                            <p>painter name</p>
-                        </div>
-                    </div>
-                    <div class="like-comment-container">
-                        <div class="icon-container">
-                            <div class="like-container">
-                                <input type="checkbox" id="like3" class="like-checkbox">
-                                <label for="like3" class="like-label">&#x2764;</label>
+                        <div class="like-comment-container">
+                            <div class="icon-container">
+                                <div class="like-container">
+                                    <input type="checkbox" id="like-{{ art.id }}" class="like-checkbox" onclick="toggleLike('{{ art.id }}')" {{ 'checked' if user_liked[art.id] else '' }}>
+                                    <label for="like-{{ art.id }}" class="like-label">
+                                        <i id="like-icon-{{ art.id }}" class="fas {{ 'fa-heart' if user_liked[art.id] else 'far fa-heart' }}"></i>
+                                    </label>
+                                    <p id="like-count-{{ art.id }}" class="pr-2 mb-2">{{ like_counts[art.id] }}</p> <!-- Number of likes -->
+                                </div>
                             </div>
-                            <p>120</p> <!-- Number of likes -->
-                        </div>
-                        <div class="icon-container">
-                            <i class="fas fa-comment"></i>
-                            <p>45</p> <!-- Number of comments -->
-                        </div>
-                    </div>
-                    <div class="price">$10</div>
-                </div>
-            </div>
-            <div class="grid-item"><img src="image/image4.webp" alt="Image 4" width="50px" height="5px">
-                <div class="overlay">
-                    <div class="image-info">
-                        <div class="profile-pic">
-                            <img src="image/image11.jpg" alt="Painter">
-                        </div>
-                        <div class="details">
-                            <span>Painting Name</span>
-                            <p>painter name</p>
-                        </div>
-                    </div>
-                    <div class="like-comment-container">
-                        <div class="icon-container">
-                            <div class="like-container">
-                                <input type="checkbox" id="like4" class="like-checkbox">
-                                <label for="like4" class="like-label">&#x2764;</label>
+                            <div class="icon-container">
+                                <a href="{{ url_for('single_post', art_id = art.id) }}#comment">
+                                    <i class="fas fa-comment comment"></i>
+                                </a>
+                                <p>{{comment_counts[art.id]}}</p> <!-- Number of comments -->
                             </div>
-                            <p>120</p> <!-- Number of likes -->
                         </div>
-                        <div class="icon-container">
-                            <i class="fas fa-comment"></i>
-                            <p>45</p> <!-- Number of comments -->
-                        </div>
+                        <div class="price">${{art.price}}</div>
                     </div>
-                    <div class="price">$10</div>
                 </div>
-            </div>
-            <div class="grid-item"><img src="image/image5.jpg" alt="Image 5" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image6.webp" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image7.webp" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image8.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image9.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/images9.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/images10.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image11.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image12.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image13.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image1.jpg" alt="Image 1" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image2.png" alt="Image 2" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image3.webp" alt="Image 3" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image4.webp" alt="Image 4" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image5.jpg" alt="Image 5" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image6.webp" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image7.webp" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image8.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image9.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/images9.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/images10.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image11.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image12.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <div class="grid-item"><img src="image/image13.jpg" alt="Image 6" width="50px" height="5px"></div>
-            <!-- Add more images as needed -->
+            {% endfor %}
         </div>
     </section>
-    <div class="about-us">
-       <section>
-        <table>
-            <caption>About-us</caption>
-            <tr>
-                <th>Welcome to Afri-Arts Gallery Showcase</th>
-                <th>Empower African Creators</th>
-                <th>A Community You Can Trust</th>
-            </tr>
-            <tr>
-                <td>Discover the vibrant world of African art with Afri-Arts Gallery Showcase, an online platform where
-                    artists and art enthusiasts connect to celebrate and share unique, culturally rich creations. Our community
-                    is dedicated to uplifting emerging talents and preserving the heritage of African artistry.
-                </td>
-                <td>
-                    Afri-Arts is more than just a gallery—it's a movement. We offer a space where independent artists can
-                    showcase their work, free from intermediaries. Every piece tells a story, and we make it easy for you to
-                    connect directly with the creators behind the art.
-                </td>
-                <td>
-                    Your experience is our priority. From secure transactions to personalized support, we ensure that every
-                    interaction on our platform is seamless and safe. Whether you're an artist or an admirer, we're here to help.
-                </td>
-            </tr>
-        </table>
-        <h1>Have a question? Well, we’ve got some answers.</h1>
-        <button>Contact-us</button>
-      <section>
-    </div>
-{% endblock%}
+    <script>
+        function getCsrfToken() {
+            return document.getElementById('csrf-token').getAttribute('content');
+        }
+    
+        function toggleLike(artworkId) {
+            fetch('/like_toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()  // Read CSRF token from meta tag
+                },
+                body: JSON.stringify({
+                    artwork_id: artworkId
+                })
+            })
+            .then(response => {
+            if (response.status === 401) {
+                // User is not authenticated, redirect to sign-in page
+                return response.json().then(data => {
+                    window.location.href = data.redirect;
+                });
+            } else {
+                return response.json();
+            }
+            })
+            .then(data => {
+                if (data.liked) {
+                    document.getElementById(`like-icon-${artworkId}`).classList.remove('far');  // empty heart
+                    document.getElementById(`like-icon-${artworkId}`).classList.add('fas');   // filled heart
+                } else {
+                    document.getElementById(`like-icon-${artworkId}`).classList.remove('fas');
+                    document.getElementById(`like-icon-${artworkId}`).classList.add('far');
+                }
+                document.getElementById(`like-count-${artworkId}`).textContent = data.like_count;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='artists.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="artists"><h1>All Artists</h1></div>
+    <div class="artist-grid">
+        {% for user in users %}
+            <a href="{{ url_for('artist_posts', username=user.username) }}">
+            <div class="artist-card">
+                <div class="background"><img src="{{ url_for('static', filename='image/' + user.image_file) }}" alt="Image"></div>
+                <div class="artist-overlay">
+                    <div class="profile-container">
+                        <img src="{{ url_for('static', filename='image/' + user.image_file) }}" alt="Image" class="profile-picture">
+                        <div class="profile-name">
+                            <h2>{{user.first_name}} {{user.last_name}}</h2>
+                            <h3>{{user.city}}</h3>
+                            <h4>{{user.country}}</h4>
+                            <p>{{user_posts[user.id]}} posts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        {% endfor %}   
+    </div>
+{% endblock %}

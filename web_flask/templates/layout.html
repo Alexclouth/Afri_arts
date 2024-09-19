@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="500">
+    <meta http-equiv="refresh" content="600">
     <title>Afri Arts</title>
     <link rel="icon" href="{{ url_for('static', filename='image/icon.jpg') }}" alt="Afri">
     <!-- Bootstrap CSS -->
@@ -15,25 +15,46 @@
 <body>
     <header>
         <nav>
-            <a href="home.html" class="logo">
+            <a href="/" class="logo">
                 <div class="img-container">
                     <img src="{{ url_for('static', filename='image/icon.jpg') }}" alt="Afri Arts" width="55px" height="55px"> <p>Afri Arts</p>
                 </div>
             </a>
-            <div class="search">
-                <input type="text" class="search-input" placeholder="Search...">
-                <span class="search-icon"></span>
-            </div>
+            <form action="{{ url_for('search') }}" method="GET" class="search">
+              <input type="text" name="query" class="search-input" placeholder="Search artwork...">
+              <span type="submit" class="search-icon"></span>
+            </form>
+            <div class="nav_list">
             <ul>
-                <li><a href="home">Home</a></li>
-                <li><a href="artists.html">Artists</a></li>
-                <li><a href="artworks.html">Artworks</a></li>
-                <li><a href="signin">Login</a></li>
-                <li><a href="signup">Register</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/artists">Artists</a></li>
+                <li><a href="/about">About-us</a></li>
+                {% if current_user.is_authenticated %}
+                  {% if current_user.is_artist=='artist' %}
+                    <li><a href="/post">Upload</a></li>
+                  {% endif %}
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/account">Account</a></li>
+                {% else %}
+                <li><a href="/signin">Login</a></li>
+                <li><a href="/signup">Register</a></li>
+                {% endif %}
             </ul>
+          </div>
         </nav>
     </header>
-    <main>
+    <main>  
+      <div class="alert-message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
 	    {% block content %}{% endblock %}
     </main>
  </body>

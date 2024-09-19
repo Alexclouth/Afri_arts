@@ -1,6 +1,26 @@
-.content-section {
+body {
   background: #ffffff;
-  padding: 30px 300px 20px 20px;
-  border: 1px solid #dddddd;
+  color: #000000;
+  font-weight: 500;
+}
+.content-section {
+  padding: 30px 30px 20px 20px;
+  margin: 30px 350px 20px 350px;
+  border: 2px solid #000000;
   margin-bottom: 20px;
+  border-radius: 4%;
+  color: #000000;
+}
+
+.bold-border {
+  border-width: 1px; /* Adjust the thickness of the border */
+  border-color: #000000; /* You can change the color as needed */
+  border-style: solid; /* Optional: ensures a solid border */
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.display {
+  font-size: small;
+  font-weight: 700;
 }

@@ -1,0 +1,64 @@
+.user_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #190da3;
+    overflow: hidden;
+    margin:0 10px 0 5px;
+    border: 1px solid #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    object-fit: cover;
+}
+
+.profile-placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: #444444;
+    color: rgb(255, 0, 0);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 100px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-top: 20px;
+}
+
+.media-body h2 {
+    font-size: 30px;
+    padding-top: 20px;
+    font-weight: 700;
+}
+
+.media-body p {
+    font-size: 15px;
+    padding-top: 5px;
+}
+
+.form-group {
+    margin: 10px 100px;
+    font-size: large;
+}
+
+.form-group legend {
+    align-items: center;
+    text-align: center;
+    font-size: larger;
+    font-weight: 900;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 50px;
+}
