@@ -1,7 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint, current_app
 from web_flask import bcrypt, db
-from flask import render_template, url_for, flash, redirect, request, Blueprint
-from web_flask import app, bcrypt, db
 from web_flask.users.forms import Signup, Signin, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from flask_login import login_user, current_user, logout_user, login_required
 from web_flask.models import User, Artwork
@@ -109,7 +107,6 @@ def reset_request():
             flash('An email has been sent with instructions to reset your password.', 'info')
         except Exception as e:
             current_app.logger.error(f"Error sending email: {e}")
-            app.logger.error(f"Error sending email: {e}")
             flash('Failed to send the reset email. Please try again later.', 'danger')
         return redirect(url_for('users.signin'))
     return render_template('reset_request.html', title='Reset Password', form=form)

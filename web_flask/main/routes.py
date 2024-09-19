@@ -3,11 +3,6 @@ from web_flask import db
 from flask_login import current_user
 from web_flask.models import Artwork, Comment
 from web_flask.main.utils import search_artworks_by_title
-from flask import render_template, url_for, flash, redirect, request, jsonify
-from web_flask import db
-from flask_login import current_user
-from web_flask.models import Artwork, Comment
-from flask import Blueprint
 
 main = Blueprint('main', __name__)
 

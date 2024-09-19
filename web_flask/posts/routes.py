@@ -1,6 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
 from web_flask import db
-from flask import render_template, url_for, flash, redirect, request, abort
 from web_flask.posts.forms import  PostForm, CommentForm
 from flask_login import  current_user, login_required
 from web_flask.models import Artwork, Comment
