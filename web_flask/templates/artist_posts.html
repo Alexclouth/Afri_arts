@@ -25,7 +25,11 @@
     <div class="grid-container">
         {% for post in posts %}
                 <div class="grid-item">
+<<<<<<< HEAD
                     <a href="{{ url_for('posts.single_post', art_id = post.id) }}">
+=======
+                    <a href="{{ url_for('single_post', art_id = post.id) }}">
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
                         <img src="{{ url_for('static', filename='artworks/' + post.image) }}" alt="Artwork">
                     </a>
                     <h1>Title: {{ post.title }}</h1>

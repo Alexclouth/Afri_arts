@@ -1,5 +1,9 @@
 from datetime import datetime
+<<<<<<< HEAD
 from web_flask import db, login_manager
+=======
+from web_flask import db, login_manager, app
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin
 from flask import current_app
@@ -33,6 +37,7 @@ class User(db.Model, UserMixin):
     liked_artworks = db.relationship('Artwork', secondary=likes, backref=db.backref('liked_by', lazy='dynamic'))
 
     def get_reset_token(self, expires_sec=1800):
+<<<<<<< HEAD
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
@@ -47,6 +52,13 @@ class User(db.Model, UserMixin):
 
 
 
+=======
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+
+
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 class Artwork(db.Model):
     """Represents an artwork for the Afri-Arts Gallery Showcase."""
     id = db.Column(db.Integer, primary_key=True)

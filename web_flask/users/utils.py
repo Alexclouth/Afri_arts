@@ -1,14 +1,23 @@
 import secrets
 import os
+<<<<<<< HEAD
 from flask import url_for, current_app
 from web_flask import mail
+=======
+from flask import url_for
+from web_flask import app, mail
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 from flask_mail import Message
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
+<<<<<<< HEAD
     picture_path = os.path.join(current_app.root_path, 'static/image', picture_fn)
+=======
+    picture_path = os.path.join(app.root_path, 'static/image', picture_fn)
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 
     form_picture.save(picture_path)
 

@@ -9,7 +9,11 @@
     <div class="artists"><h1>All Artists</h1></div>
     <div class="artist-grid">
         {% for user in users %}
+<<<<<<< HEAD
             <a href="{{ url_for('users.artist_posts', username=user.username) }}">
+=======
+            <a href="{{ url_for('artist_posts', username=user.username) }}">
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
             <div class="artist-card">
                 <div class="background"><img src="{{ url_for('static', filename='image/' + user.image_file) }}" alt="Image"></div>
                 <div class="artist-overlay">

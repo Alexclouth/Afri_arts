@@ -1,5 +1,9 @@
 import secrets
 import os
+<<<<<<< HEAD
+=======
+from web_flask import app
+>>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 
 def save_artwork(art_picture):
     random_hex = secrets.token_hex(8)
