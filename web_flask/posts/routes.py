@@ -83,6 +83,10 @@ def delete_post(art_id):
     post = Artwork.query.get_or_404(art_id)
     if post.uploader != current_user:
         abort(403)
+    # Handle related comments or other dependencies
+    comments = Comment.query.filter_by(artwork_id=art_id).all()
+    for comment in comments:
+        db.session.delete(comment)
     db.session.delete(post)
     db.session.commit()
     flash('Your post has been deleted!', 'success')
