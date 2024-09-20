@@ -198,20 +198,13 @@
     top: 7px;
     right: 5px;
     justify-content: center;
-<<<<<<< HEAD
-=======
-    border: 2px solid #ff0000;
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
     border-radius: 50%;
     color: #ff0000;
+    border: 2px solid red;
     display: flex;
     font-size: 15px;
     font-weight: 700;
     padding: 5px 3px;
-<<<<<<< HEAD
-    border: 2px solid #ff0000;
-=======
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
   }
 
 .grid-item:hover .price:hover {
