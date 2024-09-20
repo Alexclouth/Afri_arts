@@ -5,18 +5,10 @@ body {
 
 .artist-profile {
     width: 80%;
-<<<<<<< HEAD
     height: 129vh;
     border-bottom: 1px solid rgb(100, 100, 100);
     margin: 0 120px;
     flex-direction: row;
-=======
-    height: 127vh;
-    border-bottom: 1px solid rgb(100, 100, 100);
-    margin: 0 120px;
-    flex-direction: row;
-    margin-top: 90px;
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
 }
 
 
@@ -28,11 +20,7 @@ body {
 
 .artist-overlay {
     position: absolute;
-<<<<<<< HEAD
     top: 97px;
-=======
-    top: 73px;
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
     left: 0;
     width: 81.5%;
     height: 132vh;
@@ -43,11 +31,7 @@ body {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     margin: 0 90px 0 110px;
-<<<<<<< HEAD
     padding-top: 25px;
-=======
-    padding-top: 9px;
->>>>>>> bd7c580235255908c4cca384db881c411e0799b9
     border-bottom: none;
     background: linear-gradient(to top, #000000 50%, rgba(0,0,0,0) 50%);
 }
