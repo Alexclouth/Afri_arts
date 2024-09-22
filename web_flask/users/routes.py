@@ -1,10 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint, current_app
 from web_flask import bcrypt, db
-from flask import render_template, url_for, flash, redirect, request, Blueprint
-from web_flask import app, bcrypt, db
 from web_flask.users.forms import Signup, Signin, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from flask_login import login_user, current_user, logout_user, login_required
-from web_flask.models import User, Artwork
+from web_flask.models import User, Artwork, likes
 from web_flask.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -55,9 +53,24 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
+
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
+    first_letter = current_user.username[0].upper()  # Get the first letter of the username
+    if current_user.image_file != 'default.jpg':
+        image_file = url_for('static', filename='image/' + current_user.image_file)
+    else:
+        image_file = None
+
+    liked_artworks = Artwork.query.join(likes).filter(likes.c.user_id == current_user.id).order_by(Artwork.date_posted.desc()).all()
+
+
+    return render_template('account.html', image_file=image_file, liked_artworks=liked_artworks, first_letter=first_letter)
+
+@users.route("/edit_account", methods=['GET', 'POST'])
+@login_required
+def edit_account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -65,18 +78,34 @@ def account():
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        if current_user.is_artist == 'artsit':
+            current_user.first_name=form.first_name.data,
+            current_user.last_name=form.last_name.data,
+            current_user.city=form.city.data,
+            current_user.country=form.country.data,
+            current_user.bio=form.bio.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('users.account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        if current_user.is_artist == 'artist':
+            form.first_name.data = current_user.first_name
+            form.last_name.data = current_user.last_name
+            form.city.data = current_user.city
+            form.country.data = current_user.country
+            form.bio.data = current_user.bio
+    
     first_letter = current_user.username[0].upper()  # Get the first letter of the username
     if current_user.image_file != 'default.jpg':
         image_file = url_for('static', filename='image/' + current_user.image_file)
     else:
         image_file = None
-    return render_template('account.html', image_file=image_file, form=form, first_letter=first_letter)
+
+    return render_template('edit_account.html', image_file=image_file, form=form, first_letter=first_letter)
+
+
 
 @users.route("/user/<string:username>")
 def artist_posts(username):
@@ -109,7 +138,6 @@ def reset_request():
             flash('An email has been sent with instructions to reset your password.', 'info')
         except Exception as e:
             current_app.logger.error(f"Error sending email: {e}")
-            app.logger.error(f"Error sending email: {e}")
             flash('Failed to send the reset email. Please try again later.', 'danger')
         return redirect(url_for('users.signin'))
     return render_template('reset_request.html', title='Reset Password', form=form)

@@ -41,12 +41,16 @@ class Signin(FlaskForm):
 
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'webp'])])
-    submit = SubmitField('Update')
+    first_name = StringField('First Name', validators=[Length(max=128)])
+    last_name = StringField('Last Name', validators=[Length(max=128)])
+    city = StringField('City', validators=[Length(max=128)])
+    country = StringField('Country', validators=[Length(max=128)])
+    bio = TextAreaField('Bio', validators=[Length(max=1024)])
+
+    submit = SubmitField('Edit Profile')
 
     def validate_username(self, username):
         if username.data != current_user.username:

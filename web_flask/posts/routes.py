@@ -1,6 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
 from web_flask import db
-from flask import render_template, url_for, flash, redirect, request, abort
 from web_flask.posts.forms import  PostForm, CommentForm
 from flask_login import  current_user, login_required
 from web_flask.models import Artwork, Comment
@@ -84,6 +83,10 @@ def delete_post(art_id):
     post = Artwork.query.get_or_404(art_id)
     if post.uploader != current_user:
         abort(403)
+    # Handle related comments or other dependencies
+    comments = Comment.query.filter_by(artwork_id=art_id).all()
+    for comment in comments:
+        db.session.delete(comment)
     db.session.delete(post)
     db.session.commit()
     flash('Your post has been deleted!', 'success')
