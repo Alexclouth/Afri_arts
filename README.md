@@ -1,2 +1,0 @@
-# Afri art website
-## content
