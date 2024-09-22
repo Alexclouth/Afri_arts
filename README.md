@@ -11,7 +11,6 @@ Afri-Arts is an online platform where artists can display and sell their artwork
 - [Deployment](#deployment)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 - [Developers](#developers)
 
 ## Project Overview
@@ -236,12 +235,6 @@ Contributions are welcome! To contribute:
 5. **Create a Pull Request** on GitHub.
 
 Make sure your code is clean and passes all tests before submitting.
-
----
-
-## License
-
-This project is licensed under the MIT License. For more details, see the [LICENSE](LICENSE) file.
 
 ---
 
