@@ -78,12 +78,11 @@ def edit_account():
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
-        if current_user.is_artist == 'artsit':
-            current_user.first_name=form.first_name.data,
-            current_user.last_name=form.last_name.data,
-            current_user.city=form.city.data,
-            current_user.country=form.country.data,
-            current_user.bio=form.bio.data
+        current_user.first_name=form.first_name.data,
+        current_user.last_name=form.last_name.data,
+        current_user.city=form.city.data,
+        current_user.country=form.country.data,
+        current_user.bio=form.bio.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('users.account'))
